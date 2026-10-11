@@ -1,0 +1,16 @@
+# Reproducible HX-06 build. `vagrant up` creates the vault at 10.10.20.60
+# on a host-only network with no NAT route to the internet.
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/jammy64"          # Ubuntu 22.04 LTS
+  config.vm.hostname = "gringotts"
+  config.vm.network "private_network", ip: "10.10.20.60",
+                    virtualbox__intnet: false   # host-only adapter
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "gringotts-vault"
+    vb.memory = 1024
+    vb.cpus = 1
+    # strip the default NAT adapter after boot to remove the internet route:
+    vb.customize ["modifyvm", :id, "--nic1", "hostonly"]
+  end
+  config.vm.provision "shell", path: "setup.sh"
+end

@@ -1,0 +1,5 @@
+Sep 18 23:46:40 hogwarts-archive sshd[1821]: Accepted session for svc-archive
+Sep 18 23:47:02 hogwarts-archive floo[2213]: console session opened by USER-472
+Sep 18 23:47:16 hogwarts-archive floo[2213]: outbound connection ESTABLISHED -> 10.10.20.45:4444 (unexpected egress)
+Sep 18 23:47:51 hogwarts-archive floo[2213]: transfer complete, 4213 bytes
+Sep 18 23:48:10 hogwarts-archive systemd[1]: floo.service: consumed 00:01:12 CPU

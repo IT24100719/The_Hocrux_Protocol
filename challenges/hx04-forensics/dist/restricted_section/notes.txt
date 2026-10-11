@@ -1,0 +1,7 @@
+Investigator handover notes
+---------------------------
+- Account of interest flagged by the archive team: USER-472
+- The account accessed the Floo console right before an unexpected egress.
+- A screenshot was captured from the console and saved as evidence.jpg.
+- Metadata on that capture was NOT scrubbed. Check it.
+- Reconstruct the outbound indicator (host, port, time) for the packet team.

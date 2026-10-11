@@ -1,0 +1,23 @@
+================================================================
+  DEPARTMENT OF MYSTERIES - UNSPEAKABLE DIVISION
+  CASE FILE: THE HORCRUX PROTOCOL        CLASSIFICATION: UMBRAL
+================================================================
+ Ref       : DM-HX04-ARCHIVE
+ Logged by : G. Weasley, Unspeakable - Time Room
+ Re        : Restricted-section evidence intake
+
+ Bundle recovered from the restricted archive after the account named in the
+ Chamber cipher - USER-472 - was flagged. Every file here is a copy; the
+ originals are sealed.
+
+ Correlate that account across the logs and hold to the window around 23:47.
+ The outbound indicator can be rebuilt from what is here. Treat nothing as
+ background.
+
+ What the logs will not tell you is why the archive went so quiet that night,
+ or why - since before any of us noticed - one man has been holding a line
+ between this thing and the rest of us. We are only now beginning to see him.
+                                                              - G.W.
+ MANIFEST
+   access.log  system.log  notes.txt  report.pdf  evidence.jpg
+================================================================

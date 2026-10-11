@@ -1,0 +1,22 @@
+================================================================
+  DEPARTMENT OF MYSTERIES - UNSPEAKABLE DIVISION
+  CASE FILE: THE HORCRUX PROTOCOL        CLASSIFICATION: UMBRAL
+================================================================
+ Ref       : DM-HX05-FLOO
+ Logged by : G. Weasley, Unspeakable - Time Room
+ Re        : Floo-network capture  (2026-09-18)
+
+ Capture lifted from the floo relay the night the archive went still. Most of
+ it is ordinary - libraries, owl-post, the great hall - and one conversation
+ that belongs to none of them.
+
+ Isolate that one and it carries the directive's next address in plain words:
+ a vault, a keeper, and the word that opens it.
+
+ We have followed this from a map, through a diary, out of a cipher and across
+ the archive logs. It is gathering itself somewhere deep now - the way a thing
+ does when it means to last. Follow it down, and finish this.
+                                                              - G.W.
+ ENCLOSED
+   floo_network.pcap - relay capture, 2026-09-18.
+================================================================

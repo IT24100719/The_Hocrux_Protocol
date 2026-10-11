@@ -2,7 +2,6 @@
 answer-key/
 *.snapshot
 *.ova
-challenges/**/dist/
 __pycache__/
 backups/
 

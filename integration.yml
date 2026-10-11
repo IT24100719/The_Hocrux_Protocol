@@ -1,0 +1,44 @@
+# =====================================================================
+# THE HORCRUX PROTOCOL - INTEGRATION CONTRACT (single source of truth)
+# Every generator and challenge reads its values from here.
+# Change a value here, regenerate, re-solve end to end. Never edit in two places.
+# This file is PRIVATE. It is .gitignored. Do not commit to any public repo.
+# =====================================================================
+
+flag_regex: '^HORCRUX\{[A-Za-z0-9_\-]{4,64}\}$'
+
+flags:
+  hx01: "HORCRUX{m1sch13f_m4n4g3d}"
+  hx02: "HORCRUX{th3_d14ry_r3m3mb3rs}"
+  hx03: "HORCRUX{cl4ss1c4l_runes_br0k3n}"
+  hx04: "HORCRUX{r3str1ct3d_s3ct10n_l0g5}"
+  hx05: "HORCRUX{fl00_p0wd3r_tr4c3d}"
+  hx06: "HORCRUX{g0bl1n_m4d3_v4ult_0wn3d}"
+
+# ---- Handover values passed between stages ----
+handover:
+  # HX-01 -> HX-02 : where to go and who to be
+  web_portal_path: "/chamber"
+  web_target_user: "triddle"
+
+  # HX-02 -> HX-03 : cipher key is themed on the chamber clue
+  cipher_key: "RIDDLE"          # Vigenere key
+
+  # HX-03 -> HX-04 : forensic identifier
+  identifier: "USER-472"
+
+  # HX-04 -> HX-05 : network indicator (one unique stream)
+  source_ip: "10.10.20.45"
+  source_port: 4444
+  timestamp: "23:47:16"
+  capture_date: "2026-09-18"
+
+  # HX-05 -> HX-06 : final target contract (must match VM build)
+  target_host: "10.10.20.60"
+  vault_user: "vault"
+  vault_password: "GRINGOTTS-472"   # used as SSH creds for the capstone
+  investigation_code: "GRINGOTTS-472"
+
+networks:
+  internal_ctf: "172.20.0.0/24"
+  isolated_lab: "10.10.20.0/24"

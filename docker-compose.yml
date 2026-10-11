@@ -1,0 +1,145 @@
+# The Horcrux Protocol - platform stack
+# Bind published ports to the LAB interface only. Set LAB_IP in .env.
+# CTFd, db, cache, and the web box sit on the internal CTF network.
+# HX-06 (the Linux privesc target) runs here as a container on its own isolated
+# network, SSH published on :2222. The Vagrant VM in challenges/hx06-vault/ is
+# the alternative for a real lab network (target 10.10.20.60).
+
+services:
+  ctfd:
+    # ctfd/ctfd:3.7.7 + psycopg2 driver (the stock image ships only PyMySQL,
+    # which cannot talk to the pinned Postgres backend). See ctfd/Dockerfile.
+    build: ./ctfd
+    image: horcrux-ctfd:3.7.7-pg
+    restart: always
+    environment:
+      - UPLOAD_FOLDER=/var/uploads
+      - DATABASE_URL=postgresql+psycopg2://ctfd:${DB_PASSWORD}@db/ctfd
+      - REDIS_URL=redis://cache:6379
+      - WORKERS=2
+      - SECRET_KEY=${CTFD_SECRET_KEY}
+      - LOG_FOLDER=/var/log/CTFd
+      - REVERSE_PROXY=true
+      # Welcome points granted to each new player (horcrux_starting_points plugin).
+      - HORCRUX_START_POINTS=${HORCRUX_START_POINTS:-100}
+    volumes:
+      - ctfd_uploads:/var/uploads
+      - ctfd_logs:/var/log/CTFd
+    depends_on:
+      - db
+      - cache
+    networks:
+      - internal
+    # Not published directly - only reachable through the proxy.
+
+  proxy:
+    image: nginx:1.27-alpine
+    restart: always
+    ports:
+      - "${LAB_IP}:8000:80"        # participants reach CTFd here
+    volumes:
+      - ./proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./proxy/loading.html:/usr/share/nginx/html/loading.html:ro
+      - ./audio:/usr/share/nginx/html/audio:ro   # soundtrack (optional; drop mp3s into ./audio)
+      - provision_state:/run/horcrux:ro   # readiness marker set by the seeder
+    depends_on:
+      - ctfd
+      - hx02-web
+    networks:
+      - internal
+
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=ctfd
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=ctfd
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - internal
+    # No ports published - internal only.
+
+  cache:
+    image: redis:7-alpine
+    restart: always
+    volumes:
+      - redis_data:/data
+    networks:
+      - internal
+
+  hx02-web:
+    build: ./challenges/hx02-web
+    restart: always
+    read_only: true
+    tmpfs:
+      - /tmp
+    environment:
+      # Fallbacks for the manual build-all.sh path; the seeder writes the real
+      # flag/ciphertext to the shared volume for the fully-automated path.
+      - HX02_FLAG=${HX02_FLAG:-}
+      - HX02_CIPHERTEXT=${HX02_CIPHERTEXT:-}
+      - HX02_TARGET_USER=${HX02_TARGET_USER:-triddle}
+    volumes:
+      - artifacts:/shared:ro        # ciphertext + flag published by the seeder
+    networks:
+      - internal
+    # Reached only through the proxy at /chamber. No published port.
+
+  hx06-vault:
+    # HX-06 Linux privesc target (same provisioning as the Vagrant VM). On its
+    # OWN isolated network — no route to CTFd/db and no internet — so rooting it
+    # leads nowhere but the flag. Players SSH to the published port.
+    build: ./challenges/hx06-vault
+    image: horcrux-hx06-vault
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN                 # lets the entrypoint drop outbound egress (no internet)
+    ports:
+      - "${LAB_IP}:2222:22"       # ssh vault@$LAB_IP -p 2222
+    networks:
+      - vault
+
+  seeder:
+    # One-shot provisioner: generates artefacts, publishes the HX-02
+    # ciphertext/flag to the shared volume, waits for CTFd, then seeds
+    # challenges/flags/attachments/prereqs/hints/theme/pages. Exits when done.
+    # This is what makes `docker compose up -d` a complete, playable deploy.
+    build: ./tools/seeder
+    image: horcrux-seeder
+    environment:
+      - CTFD_URL=http://ctfd:8000
+    volumes:
+      - ./:/repo                   # source + integration.yml + .env (admin creds)
+      - artifacts:/shared          # hands the HX-02 ciphertext/flag to hx02-web
+      - provision_state:/run/horcrux  # writes the readiness marker when done
+    depends_on:
+      - ctfd
+    networks:
+      - internal
+    restart: "no"                  # run once per `up`
+
+networks:
+  internal:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+  vault:
+    driver: bridge                # dedicated net: isolated from CTFd/db, SSH publishable
+    # Outbound internet from the vault box is dropped INSIDE the container (see
+    # challenges/hx06-vault/entrypoint.sh + cap_add NET_ADMIN above), giving the
+    # report's "host-only, no public route" property while still publishing SSH.
+    # NB: not `internal: true` — Docker can't publish a port from an internal-only
+    # network. The box therefore has outbound internet (unlike the Vagrant VM).
+    # In a real deployment, drop egress with a host firewall rule if you need the
+    # VM's no-internet property.
+
+volumes:
+  ctfd_uploads:
+  ctfd_logs:
+  db_data:
+  redis_data:
+  artifacts:        # HX-02 ciphertext/flag shared from the seeder to hx02-web
+  provision_state:  # readiness marker: seeder writes, proxy reads (loading screen gate)

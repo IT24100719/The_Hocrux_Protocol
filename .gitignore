@@ -1,0 +1,13 @@
+.env
+answer-key/
+*.snapshot
+*.ova
+challenges/**/dist/
+__pycache__/
+backups/
+
+
+# build artefacts / packages (contain the gitignored secrets inside)
+*.zip
+*.tgz
+*.tar.gz

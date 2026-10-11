@@ -1,0 +1,80 @@
+# =====================================================================
+# Challenge definitions — The Horcrux Protocol (declarative, version-controlled)
+# Consumed by tools/seed_ctfd.py to (re)create the CTF on a fresh CTFd.
+#  - Flags are NOT here; they come from integration.yml (gitignored) by `key`.
+#  - Attachments are produced by build-all.sh into each challenge's dist/ dir.
+#  - Stages unlock in list order: each requires the previous one (set as a
+#    challenge prerequisite, anonymized).  Hints live in hints.yml.
+# =====================================================================
+challenges:
+- key: hx01
+  name: HX-01 — The Marauder’s Map
+  category: Steganography
+  value: 100
+  type: standard
+  state: visible
+  description: |-
+    **Steganography.** A map has surfaced in the archive — old parchment, moving ink. Something is hidden in the picture itself, not in its labels. Recover the fragment and the clue it carries.
+
+    Attachment: `marauders_map.png`
+  attachment: challenges/hx01-stego/dist/marauders_map.png
+- key: hx02
+  name: HX-02 — The Chamber of Secrets
+  category: Web
+  value: 100
+  type: standard
+  state: visible
+  description: |-
+    **Web.** A research portal guards a diary. Honest knocking won’t get you in — but the lock is not as careful as it looks.
+
+    Target: the Chamber portal at **/chamber** on this host.
+  attachment: null
+- key: hx03
+  name: HX-03 — The Runes of Hogwarts
+  category: Cryptography
+  value: 200
+  type: standard
+  state: visible
+  description: |-
+    **Cryptography.** A message was recovered from the diary, scrambled — a classical cipher with a themed key. Decode it to name the compromised account and recover the fragment.
+
+    Attachment: `ciphertext.txt`
+  attachments:
+  - challenges/hx03-crypto/dist/ciphertext.txt
+  - challenges/hx03-crypto/dist/case_note.txt
+- key: hx04
+  name: HX-04 — The Restricted Section
+  category: Forensics
+  value: 200
+  type: standard
+  state: visible
+  description: |-
+    **Forensics.** A bundle from the restricted archive. Correlate the suspect account across the logs, reconstruct the outbound indicator, and find what the metadata never scrubbed.
+
+    Attachment: `restricted_section.zip`
+  attachment: challenges/hx04-forensics/dist/restricted_section.zip
+- key: hx05
+  name: HX-05 — The Floo Network
+  category: Networking
+  value: 300
+  type: standard
+  state: visible
+  description: |-
+    **Networking.** A capture full of ordinary traffic — and one conversation that does not belong. Isolate it and read what it carries toward the vault.
+
+    Attachment: `floo_network.pcap`
+  attachments:
+  - challenges/hx05-network/dist/floo_network.pcap
+  - challenges/hx05-network/dist/case_note.txt
+- key: hx06
+  name: HX-06 — The Gringotts Vault
+  category: Linux
+  value: 400
+  type: standard
+  state: visible
+  description: |-
+    **Linux / privilege escalation.** The capture named a vault, a user, and a code. SSH in, enumerate, find the single bounded misconfiguration, and read the final fragment.
+
+    Log in as `vault`; the password is the investigation code you recovered in HX-05. Connection details are below.
+  attachment: null
+  connection_info: ssh vault@{LAB_IP} -p 2222

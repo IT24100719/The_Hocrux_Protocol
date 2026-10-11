@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Horcrux Protocol — provisioning</title>
+<style>
+  :root{--gold:#c79a3e;--gold-bright:#ecc766;--cream:#e9d8b4;--ink-soft:#b49c73;--wax:#c2663a}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 20px;
+    font-family:'EB Garamond',Georgia,'Times New Roman',serif;color:var(--cream);text-align:center;
+    background:radial-gradient(90% 60% at 50% -6%,rgba(244,200,118,.18),rgba(40,26,15,0) 55%),
+               radial-gradient(120% 90% at 50% 120%,rgba(40,26,15,.6),rgba(10,7,4,0) 60%),
+               linear-gradient(180deg,#1d140b,#120d08 60%,#0d0905);}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:repeating-linear-gradient(0deg,transparent 0 42px,rgba(199,154,62,.045) 42px 43px),
+                     repeating-linear-gradient(90deg,transparent 0 42px,rgba(199,154,62,.045) 42px 43px);
+    box-shadow:inset 0 0 220px rgba(0,0,0,.72);}
+  .wrap{position:relative;z-index:1;max-width:560px;width:100%}
+  .glass{width:58px;height:58px;color:var(--gold);filter:drop-shadow(0 0 14px rgba(236,199,102,.45));
+    animation:flip 2.6s cubic-bezier(.7,0,.3,1) infinite}
+  @keyframes flip{0%,38%{transform:rotate(0)}58%,100%{transform:rotate(180deg)}}
+  .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--wax);margin:22px 0 6px}
+  h1{font-family:'Cinzel','EB Garamond',Georgia,serif;font-weight:700;font-size:clamp(28px,6vw,44px);
+    letter-spacing:.06em;margin:0;color:var(--cream);text-shadow:0 0 24px rgba(244,200,118,.3)}
+  .sub{font-style:italic;color:var(--ink-soft);margin:8px 0 26px;font-size:16px}
+  .status{display:flex;align-items:center;justify-content:center;gap:10px;font-size:15px;color:var(--cream)}
+  .status .dots::after{content:"";animation:dots 1.4s steps(4,end) infinite}
+  @keyframes dots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}100%{content:""}}
+  .bar{height:3px;width:220px;max-width:70%;margin:16px auto 0;border-radius:3px;overflow:hidden;
+    background:rgba(199,154,62,.18)}
+  .bar i{display:block;height:100%;width:40%;border-radius:3px;
+    background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);animation:sweep 1.6s ease-in-out infinite}
+  @keyframes sweep{0%{transform:translateX(-120%)}100%{transform:translateX(320%)}}
+  .quote{min-height:3.2em;margin:30px auto 0;max-width:460px;font-style:italic;font-size:17px;line-height:1.5;
+    color:#d8c7a1;transition:opacity .8s ease}
+  .link{margin-top:30px;font-size:13px;color:var(--ink-soft)}
+  .link b{display:inline-block;margin-top:5px;font-family:'Cinzel','EB Garamond',Georgia,serif;letter-spacing:.06em;
+    font-size:16px;color:var(--gold-bright);word-break:break-all}
+  .foot{margin-top:26px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6f5a36}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <svg class="glass" viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor">
+      <rect x="27" y="15" width="46" height="6" rx="2"/><rect x="27" y="79" width="46" height="6" rx="2"/>
+      <path d="M32 21 L68 21 L50 50 L68 79 L32 79 L50 50 Z"/>
+    </g></svg>
+    <div class="kicker">Department of Mysteries · Case File</div>
+    <h1>The Horcrux Protocol</h1>
+    <div class="sub">Shadows Over Hogwarts</div>
+    <div class="status"><span>Provisioning the lab</span><span class="dots"></span></div>
+    <div class="bar"><i></i></div>
+    <div class="quote" id="quote"></div>
+    <div class="link">This page opens the CTF automatically when it is ready. Access it at:<br>
+      <b id="url">&nbsp;</b></div>
+    <div class="foot">First start takes a minute — the six fragments are being prepared</div>
+  </div>
+<script>
+  document.getElementById('url').textContent = location.origin + '/';
+  // Original, in-world lines (not copyrighted quotations).
+  var LINES = [
+    "The Department does not hurry. It arrives exactly when the dark does.",
+    "Every fragment carried home lifts a weight from someone unseen.",
+    "A locked door is only a question, waiting for the right hand.",
+    "In the Time Room, patience is the strongest spell there is.",
+    "Six shadows. Six fragments. One road home.",
+    "Secrets keep best in the dark — so we always bring a light.",
+    "What one hand hid, another will find. Mind the trail.",
+    "Hold the line. Someone always is.",
+    "The quietest hours are when the real work is done.",
+    "Nothing is ever truly lost — only waiting to be recovered."
+  ];
+  var q = document.getElementById('quote'), i = Math.floor(Math.random()*LINES.length);
+  function show(){ q.style.opacity = 0;
+    setTimeout(function(){ q.textContent = '“' + LINES[i % LINES.length] + '”'; q.style.opacity = 1; i++; }, 800); }
+  show(); setInterval(show, 5200);
+  // Poll readiness; when the seeder has finished, load the CTF.
+  (function poll(){
+    fetch('/horcrux-ready', {cache:'no-store'})
+      .then(function(r){ if (r.ok) { location.href = '/'; } else { setTimeout(poll, 4000); } })
+      .catch(function(){ setTimeout(poll, 4000); });
+  })();
+</script>
+</body>
+</html>

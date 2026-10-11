@@ -1,0 +1,27 @@
+# gitleaks config for The Horcrux Protocol (private lab repo).
+#
+# Real secrets — DB password, CTFd SECRET_KEY, admin password, API tokens — live
+# ONLY in .env / integration.yml / answer-key, all gitignored, so they are never
+# committed. The six CTF flags (HORCRUX{...}) are *content*, not credentials:
+# they legitimately appear in the story, the HX-06 provisioning, and the stego
+# clue. This config allowlists that flag pattern so it is not reported, while the
+# default ruleset still catches accidental secret commits (keys, tokens, etc.).
+#
+# Run before any release / before making the repo non-private:
+#     gitleaks detect --config .gitleaks.toml --redact -v
+# (also scans git history once the repo is initialised).
+title = "horcrux-gitleaks"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Intended CTF flags (content, not credentials) + gitignored secret stores."
+regexes = [
+  '''HORCRUX\{[A-Za-z0-9_\-]{4,64}\}''',
+]
+paths = [
+  '''\.env$''',
+  '''integration\.yml$''',
+  '''answer-key/.*''',
+]

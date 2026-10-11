@@ -1,0 +1,409 @@
+{
+ "_note": "Editable story text for the Horcrux theme. Change any wording here and reload — no code. Rift interludes live under each stage's 'rift' (null = none yet).",
+ "audio": {
+  "enabled": true,
+  "volume": 0.22,
+  "tracks": {
+   "ambient": "/audio/ambient.mp3",
+   "tension": "/audio/tension.mp3",
+   "finale": "/audio/finale.mp3"
+  }
+ },
+ "intro": {
+  "cta": "Begin the investigation",
+  "beats": [
+   {
+    "beat": "I · The Time Room",
+    "body": [
+     "You are not supposed to be here...  not at this hour, not with the hourglass turning for a reason the Department never sanctioned. But grief makes its own rules, and yours have brought you back to the Time Room every night for longer than you will admit.",
+     "You have worn yourself thin against it. Thin enough that time, lately, has begun to show you its seams."
+    ]
+   },
+   {
+    "beat": "II · The memory",
+    "body": [
+     "The loop settles, and it is a good one: you and Fred, sixteen and incorrigible, marched up to the Headmaster's office. McGonagall still furious about the corridor you and Peeves rigged so Filch kept reliving the same ten seconds. You'd signed it, naturally. <em>Gred &amp; Forge.</em>",
+     "Dumbledore is trying not to laugh. Fred is at your shoulder, alive, mid-grin. You could live here. You have been trying to."
+    ]
+   },
+   {
+    "beat": "III · The branch",
+    "body": [
+     "Then Fawkes lifts his head. The warmth goes out of the room like a held breath, something is waking in the present that was his master's, and the memory feels it through you. The loop shudders.",
+     "And Dumbledore, who cannot possibly see you, turns and looks you dead in the eye across twenty years. <em>“George,”</em> he says — older, graver, aimed. <em>“Listen, while there is time to.”</em>"
+    ]
+   },
+   {
+    "beat": "IV · The warning",
+    "body": [
+     "<em>“The boy who became a dark lord never trusted death to keep him. He left the world one last gift, and it is waking. Six of them, wearing faces you will know. The dead you never finished grieving are going to come back to you, and they will need you to let them go.”</em>",
+     "<em>“Do not keep them, George. Whatever it costs. Promise me you will not keep them.”</em> A map rises behind your eyes — old parchment, moving ink. <em>“Start there. And mind the surface. It always lies.”</em> Then, gently, he forces the loop closed."
+    ]
+   },
+   {
+    "beat": "V · The tool",
+    "body": [
+     "You come back to yourself with the hourglass still and Fawkes — <em>this</em> Fawkes, the one from the loop — settling onto your chair as though he came through with you.",
+     "In the corridor a hooded figure presses something into your hands and is gone before you can speak. A small instrument, cold, intricate. It lifts souls out of time; you know that the way you know your own name. And it feels <em>familiar</em> — the weight, the make — though you cannot think why.",
+     "On the Network, a file has just woken. An old map of the castle, drawn in ink that moves. Dark times are here. <strong>Go.</strong>"
+    ]
+   }
+  ]
+ },
+ "stages": {
+  "HX-01": {
+   "domain": "Steganography",
+   "ghost": "the Marauder's Map",
+   "ghostName": "Remus Lupin",
+   "blurb": "A map drawn in ink that moves. Something is hidden where only a friend would look.",
+   "flagphrase": "mischief managed",
+   "doneTag": "Sealed · at rest",
+   "rift": {
+    "beat": "Between — a seam in the air",
+    "cta": "On ▸",
+    "body": [
+     "On your way out of the map's quiet, the air beside you tears — a hairline rift, there and gone, the kind the Time Room has shown you for months. But this one has something inside it.",
+     "Light, and movement, and the far-off shock of spell collision, over and over. A battle, you think — somewhere, someone, against a great many sorceres. You cannot see who. You cannot see where. Only that it is being fought, and that no one else in the world seems to feel it but you."
+    ]
+   },
+   "unlock": {
+    "beat": "On arrival",
+    "title": "The Marauder's Map",
+    "who": "",
+    "cta": "Read the blue →",
+    "body": [
+     "A note rides the map — <em>metadata is only the doormat.</em> Moony always did say the interesting things are never where you're told to look.",
+     "Don't read the label. <strong>Read past the surface. Read the blue.</strong>"
+    ]
+   },
+   "solve": {
+    "beat": "The fragment is sealed",
+    "title": "Remus Lupin",
+    "who": "Moony",
+    "flag": "mischief managed",
+    "cta": "Let him rest",
+    "body": [
+     "The faint ink resolves out of the noise like a Patronus out of fog , a message laid one bit at a time into the quietest part of the picture.",
+     "“Hello, George,” he says, the voice exactly as you kept it. “You found the doormat was a lie. Good lad.”",
+     "“Moony.” It's all you have. He died the night you lost Fred. You raise the tool. “Mischief managed,” you say .... and you let him go. Not away. Home.",
+     "“There's a door after this,” he says, already fading. “A chamber. The one who waits there wore other men's faces for a living.”"
+    ]
+   }
+  },
+  "HX-02": {
+   "domain": "Web",
+   "ghost": "the Chamber portal",
+   "ghostName": "Peter Pettigrew",
+   "blurb": "A plain login. Knock honestly and it turns you away ... but the door is unlatched.",
+   "flagphrase": "the diary remembers",
+   "doneTag": "Sealed · at rest",
+   "rift": {
+    "beat": "Between — the seam widens",
+    "cta": "On ▸",
+    "body": [
+     "It comes again before you reach the next door, and it is louder now. Through the tear: a line held against a tide of shapes — too many of them, wearing too many faces, none you can fix on before it closes.",
+     "But this time, as the rift shuts, one of the shapes simply goes out. Snuffed, like a candle. And somewhere beyond seeing, something that has been straining for a very long time eases, by the smallest degree ... as if what you did two rooms and a cipher ago lifted a weight you cannot see, from someone you have not met."
+    ]
+   },
+   "unlock": {
+    "beat": "The Chamber",
+    "title": "The Chamber portal",
+    "who": "",
+    "cta": "Slip the lock →",
+    "body": [
+     "Moony's last words follow you in: <em>nothing here is what it says it is.</em> Knock honestly and the portal turns you away — the name you carry, <strong>triddle</strong>, left no password a stranger could guess. But the door is unlatched all the same.",
+     "<em>“They never check the face, George,”</em> a thin voice says. <em>“Only the name. Give them the name ... then tell the lock the question's finished, so it never asks for the word that would prove you're him.”</em>"
+    ]
+   },
+   "solve": {
+    "beat": "The fragment is sealed",
+    "title": "Peter Pettigrew",
+    "who": "Wormtail",
+    "flag": "the diary remembers",
+    "cta": "Let him rest",
+    "body": [
+     "The lock forgets to ask. You're through — <em>Diary of triddle</em> — a fragment, <strong>the diary remembers</strong>, and beneath it a scrambled message waiting for a key.",
+     "Small, grey, flinching from his own kindness. “Twelve years you slept in my mother's house,” you say. “As the family rat.” “I know,” he says, not meeting your eye. “I was good at being what I wasn't. Let it be good for something, just once.”",
+     "You should hate him. You find you only pity him, and let him go. “The next one hid the truth in runes,” he whispers. “The key is a name this place keeps whispering. You already know it.”"
+    ]
+   }
+  },
+  "HX-03": {
+   "domain": "Cryptography",
+   "ghost": "the Runes",
+   "ghostName": "Severus Snape",
+   "blurb": "Runes gone to nonsense. A truth made breakable on purpose, waiting for its key.",
+   "flagphrase": "classical runes broken",
+   "doneTag": "Sealed · at rest",
+   "rift": {
+    "beat": "Between — the figure at the line",
+    "cta": "On ▸",
+    "body": [
+     "The rift finds you between the runes and the next door, and this time it is slow to close. The battle has narrowed to a single place now — one figure holding a line that should have broken long ago, ringed by the stolen faces, giving ground an inch at a time and making every inch cost them.",
+     "You still cannot see who it is. But you feel ... the way you felt the candle go out two rooms ago , that he knows you are there, that each fragment you have carried home has reached him somehow and bought him one more breath against the tide. The seam closes on the shape of a man who has been holding on, you realise, for you. The next door opens onto him."
+    ]
+   },
+   "unlock": {
+    "beat": "The Runes",
+    "title": "The Runes",
+    "who": "",
+    "cta": "Break the runes →",
+    "body": [
+     "The scrambled message travels with you , and the key Wormtail swore you carried: the name the Chamber kept whispering, <strong>RIDDLE.</strong>",
+     "The text is runes gone to nonsense, hiding its sense one shift at a time. <em>Turn the name through it.</em> <strong>Break the runes.</strong>"
+    ]
+   },
+   "solve": {
+    "beat": "The fragment is sealed",
+    "title": "Severus Snape",
+    "who": "",
+    "flag": "classical runes broken",
+    "cta": "Let him rest",
+    "body": [
+     "The letters fall into order like a man dropping a disguise — <strong>USER-472</strong>, an account to pull from the restricted archive, a trail going outward, and the fragment: <strong>classical runes broken.</strong>",
+     "Exact as a scalpel. “I made it breakable,” he says. “In life I could never permit myself to be read. Consider this the correction.” “The key was Riddle,” you say. “Everything I was, was keyed to him. It is the only key that ever fit.”",
+     "Then, sharper: “Guard your mind, Weasley. It cannot make you burn ... so it will come through what you love, not what you fear. When it wears a voice you would give anything to hear again — do not answer.” The air behind him splits, and something begins that sounds, impossibly, like <em>Fred.</em>"
+    ]
+   }
+  },
+  "HX-04": {
+   "domain": "Forensics",
+   "ghost": "the Restricted Section",
+   "ghostName": "Albus Dumbledore",
+   "blurb": "An archive under siege, kept readable by some patient hand working between blows.",
+   "flagphrase": "restricted section logs",
+   "doneTag": "Holding the line",
+   "rift": null,
+   "unlock": {
+    "beat": "The Restricted Section",
+    "title": "The Restricted Section",
+    "who": "",
+    "cta": "Read what was left unhidden →",
+    "body": [
+     "Snape promised you'd know the man in the archive. The shelves have gone to static ... something is fighting <em>for</em> it, or <em>in</em> it. But the records were kept readable, between blows: an account flagged for you, <strong>USER-472</strong>; a trail someone wanted found; an evidence capture whose metadata was, pointedly, <em>not</em> scrubbed."
+    ]
+   },
+   "solve": {
+    "beat": "The dam",
+    "title": "Albus Dumbledore",
+    "who": "",
+    "flag": "restricted section logs",
+    "cta": "Leave him fighting",
+    "body": [
+     "The trail bends toward a single moment — <strong>23:47:16</strong>, an outbound connection to <strong>10.10.20.45:4444.</strong> The fragment sits in the metadata: <strong>restricted section logs.</strong>",
+     "Then the static parts, and you see the war: a dozen Dumbledores, the best of him, holding a line against shapes wearing stolen faces. Three gutter out as you watch — Moony, the rat, the cold man. “You've taken three from me already,” he says. “I feel the weight of each one you set down.”",
+     "You raise the tool. He stops you with a look older than the castle. “Not me. Not yet. If I fall while they still wake, there is nothing between the world and the fire but you.” He turns you onward. “A friend waits in the fire. Then the vault. And then — come back for me. If you can.”"
+    ]
+   }
+  },
+  "HX-05": {
+   "domain": "Networking",
+   "ghost": "the Floo Network",
+   "ghostName": "Sirius Black",
+   "blurb": "A roar of fire-calls. One of them was placed for you.",
+   "flagphrase": "floo powder traced",
+   "doneTag": "Sealed · at rest",
+   "rift": {
+    "beat": "Between — the dam",
+    "cta": "To the vault ▸",
+    "body": [
+     "You know what you are looking at now. You have stood in it. Through the rift the old man fights on — a dozen of his best selves against the stolen faces, and fewer of the shapes than there were, because you have been taking them off him one soul at a time.",
+     "But he is slower than he was in the archive. The line bows where it did not bow before. Two faces left in the tide now — and then, if the dam holds that long, only his own. <em>Hurry,</em> the rift seems to say before it closes. There is not much of him left to come back for."
+    ]
+   },
+   "unlock": {
+    "beat": "The Floo Network",
+    "title": "The Floo Network",
+    "who": "",
+    "cta": "Follow the fire →",
+    "body": [
+     "<em>A friend waits in the fire,</em> Dumbledore said. The Floo is a roar of a thousand calls ... but one was placed for <em>you</em>, and you carry the trace: <strong>10.10.20.45:4444, 23:47:16.</strong>",
+     "Filter the fire down to the one conversation that doesn't belong. <strong>Follow it.</strong>"
+    ]
+   },
+   "solve": {
+    "beat": "The fragment is sealed",
+    "title": "Sirius Black",
+    "who": "Padfoot",
+    "flag": "floo powder traced",
+    "cta": "Let him run",
+    "body": [
+     "One call stands alone, burning steady — a vault at <strong>10.10.20.60</strong>; a name, <strong>vault</strong>; a code, <strong>GRINGOTTS-472</strong>; and the fragment: <strong>floo powder traced.</strong>",
+     "A face in the hearth, grinning. “Took you long enough — I always did have to shout through a fireplace.” “I knew you,” you say. “Grimmauld Place.” “I went out through a curtain in a room just down the hall from where you work now. Bit of a theme, me.”",
+     "“The vault's kept by my cousin. She killed me — family runs warm like that. But she isn't what she was.” Then, quieter: “You've gone grey in a room full of the dead, George. Don't do what I did. Go and live.” You let him out ... and he goes not as a man but as a great black dog, running."
+    ]
+   }
+  },
+  "HX-06": {
+   "domain": "Linux / Vault",
+   "ghost": "the Gringotts vault",
+   "ghostName": "Bellatrix Lestrange",
+   "blurb": "Goblin-made, meant to be unbreakable. There is always one flaw left trusted too far.",
+   "flagphrase": "goblin made vault owned",
+   "doneTag": "Sealed · at rest",
+   "rift": null,
+   "unlock": {
+    "beat": "The Gringotts vault",
+    "title": "The Gringotts vault",
+    "who": "",
+    "cta": "Make yourself master →",
+    "body": [
+     "The fire's last word was a door: a vault at <strong>10.10.20.60</strong>, goblin-made. A servant's name, <strong>vault</strong>, and a code, <strong>GRINGOTTS-472</strong>, let you into the outer dark — no further.",
+     "The last fragment is kept deeper, behind work no thief beats honestly. There is one key left trusted too far. <strong>Find it. Make yourself master.</strong>"
+    ]
+   },
+   "solve": {
+    "beat": "The last fragment",
+    "title": "Bellatrix Lestrange",
+    "who": "",
+    "flag": "goblin made vault owned",
+    "cta": "Let her go",
+    "body": [
+     "The flaw gives — one command trusted with too much — and you climb it to the root and own the thing whole: <strong>goblin made vault owned.</strong> At the bottom, the last fragment, and the last of them.",
+     "You brace for the monster. “The flaw was mine,” she says, level and tired. “I left it for you.” “My mother killed you,” you say. “I know whose son you are. Good — she did it for her daughter. I was killed by a mother. There are worse ends.”",
+     "“I will not be his leftover,” she says — the fiercest thing you've heard. “Take me out, Weasley. Let me not be his, at the end.” So you do. That is five. <em>Go and get the old man. See that he's let to stop.</em>"
+    ]
+   }
+  }
+ },
+ "temptation": {
+  "after": "HX-03",
+  "beat": "The rift",
+  "title": "A voice in the fire",
+  "refuseLabel": "Let him go",
+  "acceptLabel": "Reach for him",
+  "body": [
+   "The rift Snape left does not close. It widens, warm at the edges, and the laughing inside it is one you would know in any world: Fred.",
+   "“There you are,” he says ... every grain of his voice. “Put the little clock down and come here. You've carried them all home. So carry me. Stop holding the line and come home — and we're the pair of us again, and none of the rest of it has to matter.”",
+   "Snape's voice, cold beneath the ache: <em>it will come through what you love.</em>"
+  ],
+  "refuse": {
+   "cta": "Go ▸",
+   "body": [
+    "He reaches for the one word that was only ever yours — “Gred. Gred and Forge, come on, say it ”...  and that is how you know. Fred never used it to <em>take.</em> He would not, in any world, ask you to choose him over everyone still breathing. He died so there would <em>be</em> a world.",
+    "“You're not him,” you say. “And if there's a sliver of him in there — then he's the part telling me to let go.” You shut your mind the way the cold man taught you. The rift narrows. You let Fred go a second time — on purpose, this time."
+   ]
+  },
+  "badend": {
+   "cta": "Step back from the brink",
+   "body": [
+    "You put the clock down. You reach. And he is <em>there</em> — solid, warm, laughing, back — and you give the thing the one true word, <em>Gred and Forge</em>, and you do not let go.",
+    "Behind you the line breaks. The dam gives; the directive floods into everything still unsealed; and the world you were trying to save takes its last breath with your face pressed to Fred's shoulder.",
+    "<strong>— THE END —</strong> &nbsp; <em>The Horcrux Protocol is complete. The world is no more.</em>",
+    "...and in the ruins, the Department of Mysteries does what it has done a thousand quiet times before. It reaches into the Time Room and it rewinds. The ash un-falls. The dead lie back down. The world is handed, once more, a chance it will never know it was given. You will not remember either."
+   ]
+  }
+ },
+ "finale": {
+  "after": "HX-06",
+  "enter": {
+   "beat": "The capstone",
+   "title": "Come back for him",
+   "cta": "The reckoning ▸",
+   "body": [
+    "Five carried home. Only one shape still fights in the rifts — Dumbledore, and the last of him: his own wraith, the directive he cut from himself and would hand to no one else. You come back for him, the way he asked. He is nearly spent."
+   ]
+  },
+  "pass": {
+   "beat": "The office, again",
+   "title": "The office, again",
+   "cta": "— fin —",
+   "altLabel": "See the other ending",
+   "body": [
+    "The thread holds. You pull — and Albus Dumbledore comes up <strong>whole</strong>, the directive guttering out in your grip. It is over. The rifts fall quiet.",
+    "A figure has been at your shoulder the whole way — the hooded Unspeakable who armed you on your first night. He lowers the hood. <strong>Fred.</strong> The one who lived, from the branch where you fell. You turn the tool over and finally read what was always on the back of it — <strong>GRED &amp; FORGE</strong> — and understand you have been holding your brother's hand since the first fragment.",
+    "Then Dumbledore steps <em>into</em> the old memory and holds the door open. Warm light. McGonagall's voice fading. Your own Fred beside you. You trade the word one last time — “Gred.” “Forge.” — and the prank finally lands, the laugh you never got to finish.",
+    "Then you close the loop yourself, gently, and let it go. The office, warm and still — the place you began — now a place you can finally leave."
+   ]
+  },
+  "fail": {
+   "beat": "The dark loop",
+   "title": "A good ending. Not yours.",
+   "cta": "Take the reckoning again",
+   "body": [
+    "The thread frays. There is not enough of it to hold him. “It is all right, George,” he says, without blame. “There is one thing left that a man who cannot be saved can still do.” He spends the last of himself to end it. The directive dies with him. The world is saved.",
+    "He does not come home. The loop goes dark — no office, no warm light. You saved everyone except the two you came here hoping to keep. It is a good ending. It is not <em>yours.</em>"
+   ],
+   "altLabel": "See the other ending"
+  },
+  "quiz": {
+   "beat": "The reckoning",
+   "title": "Braid the thread",
+   "intro": "To pull a soul this deep, the tool is not enough. You need the whole road — every name and indicator, and the six in the order you met them — braided into one thread strong enough to hold him.",
+   "cta": "Braid the thread ▸",
+   "passMin": 4,
+   "questions": [
+    {
+     "type": "text",
+     "q": "The compromised researcher account — the name the diary answered to.",
+     "accept": [
+      "triddle",
+      "t riddle",
+      "t. riddle",
+      "riddle"
+     ]
+    },
+    {
+     "type": "text",
+     "q": "The six-letter key that broke the runes of Hogwarts.",
+     "accept": [
+      "riddle"
+     ]
+    },
+    {
+     "type": "choice",
+     "q": "The researcher identifier you pulled from the restricted archive.",
+     "options": [
+      "USER-247",
+      "USER-472",
+      "SVC-472",
+      "USER-742"
+     ],
+     "answer": 1
+    },
+    {
+     "type": "choice",
+     "q": "The outbound beacon the archive called home to — address, port and time.",
+     "options": [
+      "10.10.20.45:4444 @ 23:47:16",
+      "10.10.20.60:4444 @ 23:47:16",
+      "10.10.20.45:443 @ 23:47:16",
+      "10.10.20.45:4444 @ 02:47:16"
+     ],
+     "answer": 0
+    },
+    {
+     "type": "choice",
+     "q": "The vault host, and the code that opens it.",
+     "options": [
+      "10.10.20.45 / GRINGOTTS-472",
+      "10.10.20.60 / GRINGOTTS-247",
+      "10.10.20.60 / GRINGOTTS-472",
+      "10.10.20.80 / GRINGOTTS-472"
+     ],
+     "answer": 2
+    },
+    {
+     "type": "order",
+     "q": "Name the six, in the order you met them.",
+     "items": [
+      "Albus Dumbledore",
+      "Sirius Black",
+      "Remus Lupin",
+      "Bellatrix Lestrange",
+      "Peter Pettigrew",
+      "Severus Snape"
+     ],
+     "correct": [
+      "Remus Lupin",
+      "Peter Pettigrew",
+      "Severus Snape",
+      "Albus Dumbledore",
+      "Sirius Black",
+      "Bellatrix Lestrange"
+     ]
+    }
+   ]
+  }
+ }
+}

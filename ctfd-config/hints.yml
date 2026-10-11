@@ -1,0 +1,54 @@
+# =====================================================================
+# Hints — The Horcrux Protocol.  3 tiers per stage, in order:
+#   [0] gentle nudge   [1] technique   [2] near-spoiler
+# Tiers CHAIN: tier N requires tier N-1 to be unlocked first (CTFd hint
+# prerequisites), so the gentle hint always comes before the spoiler
+# regardless of CTFd's unstable hint display order.
+# cost: every stage scales with its value — tier1 = 5%, tier2 = 20%,
+# tier3 = 50% of the challenge's points. HX-01 is costed too, so its hint
+# usage shows up in the score and the unlocks log; new players get a welcome
+# balance (HORCRUX_START_POINTS) so these are reachable from a standing start.
+# =====================================================================
+hints:
+  hx01:
+  - cost: 5
+    content: Metadata is only the doormat. The real message is woven into the pixels, not the PNG text chunks.
+  - cost: 20
+    content: Look at the least significant bit — and only one colour channel carries it.
+  - cost: 50
+    content: Read the LSB of the blue channel as bytes until the `::END::` sentinel (zsteg -a finds it too).
+  hx02:
+  - cost: 5
+    content: The portal builds its login check out of exactly what you type. You don't need the researcher's password — you need to change the question the database is asked.
+  - cost: 20
+    content: The username is dropped straight into the SQL query, unquoted — so a single quote can end the string early and `--` can comment out the password check. The account you want is the diary's owner, `triddle`.
+  - cost: 50
+    content: Log in with username `triddle'--` and anything in the password box. That turns the lookup into `WHERE username='triddle'` and drops you straight into the diary.
+  hx03:
+  - cost: 10
+    content: In `ciphertext.txt` the letters are scrambled, but the digits, the `USER-###` and the flag's braces survive intact — a letter-only cipher with a repeating key, not a Caesar shift.
+  - cost: 40
+    content: It's a Vigenère cipher. The key is a six-letter name this whole chamber keeps whispering — the diary's true owner.
+  - cost: 100
+    content: Vigenère-decrypt with the key `RIDDLE`. It reveals the compromised account `USER-472` (your lead into HX-04) and the fragment.
+  hx04:
+  - cost: 10
+    content: Start from the account HX-03 named — `USER-472`. Correlate it across the log files in `restricted_section.zip` and narrow to the 23:47 window.
+  - cost: 40
+    content: Those lines let you rebuild one outbound indicator — the beacon's address and port (something on `:4444`). But the fragment itself is in none of the log files.
+  - cost: 100
+    content: The flag sits in metadata the attacker never scrubbed. Read the EXIF UserComment of `evidence.jpg` — `exiftool evidence.jpg` prints it.
+  hx05:
+  - cost: 15
+    content: Almost every packet in `floo_network.pcap` is ordinary web + DNS to `10.10.20.80`. Exactly one TCP conversation goes somewhere else — find the outlier, not the noise.
+  - cost: 60
+    content: 'It''s a beacon from the archive host `10.10.20.30` out to the attacker on port 4444, around 23:47:16. Filter to it: `ip.addr == 10.10.20.45 && tcp.port == 4444`.'
+  - cost: 150
+    content: Right-click that conversation and Follow TCP Stream. The payload spells out the next vault host (`10.10.20.60`), the user (`vault`), the investigation code, and the fragment.
+  hx06:
+  - cost: 20
+    content: The SSH password for `vault@10.10.20.60` is the investigation code you pulled from the HX-05 stream (`GRINGOTTS-472`). Once in, your first move is to see what you may run as root.
+  - cost: 80
+    content: Run `sudo -l`. One binary is allowed as root with NOPASSWD — look that binary up on GTFOBins; it has a classic shell-escape.
+  - cost: 200
+    content: The misconfig is `/usr/bin/find`. Run `sudo find . -exec /bin/sh \; -quit` for a root shell, then `cat /root/final_fragment.txt`.

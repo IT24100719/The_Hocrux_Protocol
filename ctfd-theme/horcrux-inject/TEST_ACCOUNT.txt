@@ -1,0 +1,9 @@
+Throwaway test participant for verifying the Horcrux theme on the local lab CTFd.
+Delete this account (Admin -> Users) and this file whenever you like.
+
+  URL:      http://127.0.0.1:8000
+  username: auror_tester
+  email:    auror_tester@lab.test
+  password: HxLab-test-2026
+
+(Local lab only. Not a real credential.)

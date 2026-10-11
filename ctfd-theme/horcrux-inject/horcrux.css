@@ -1,0 +1,208 @@
+/* ===========================================================================
+   The Horcrux Protocol — CTFd reskin (injected via Theme Header).
+   Targets core-beta (Bootstrap 5.3, data-bs-theme). Parchment in light,
+   candlelit dark-academia in dark. Also styles the injected story layer
+   (progress strip, Patronus sigils, cinematic interstitials).
+   =========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root{
+  --hx-ink:#2a2016; --hx-ink-soft:#4a3a28; --hx-ink-faint:#6f5b40; --hx-text:#2a2016;
+  --hx-gold:#b5892f; --hx-gold-bright:#d8a63e; --hx-ember:#c2663a; --hx-candle:#f4c876;
+  --hx-wax:#7c2b22; --hx-wax-dark:#5c1d17; --hx-patronus:#5f94c7; --hx-patronus-glow:rgba(95,148,199,.5);
+  --hx-bg:#e9dcbd;
+  --hx-bg-grad:radial-gradient(120% 90% at 50% -10%, #f2e8cf 0%, #e9dcbd 45%, #e0d0ab 100%);
+  --hx-grid:rgba(150,120,70,.05);
+  --hx-card:linear-gradient(170deg, #f4ebd4, #e4d3ad);
+  --hx-card-border:#cdb886;
+  --hx-chrome:#5a4632;
+  --hx-title:#2a2016; --hx-title-glow:0 1px 0 rgba(255,250,235,.5);
+}
+html[data-bs-theme="dark"]{
+  --hx-ink:#241a10; --hx-ink-soft:#46351f; --hx-ink-faint:#5f492c; --hx-text:#e9d8b4;
+  --hx-gold:#c79a3e; --hx-gold-bright:#ecc766; --hx-ember:#d1793f;
+  --hx-patronus:#bfe3ff; --hx-patronus-glow:rgba(150,205,255,.7);
+  --hx-bg:#120d08;
+  --hx-bg-grad:radial-gradient(90% 60% at 50% -6%, rgba(244,200,118,.22), rgba(40,26,15,0) 55%), radial-gradient(120% 90% at 50% 120%, rgba(40,26,15,.6), rgba(10,7,4,0) 60%), linear-gradient(180deg,#1d140b,#120d08 60%,#0d0905);
+  --hx-grid:rgba(199,154,62,.05);
+  --hx-card:linear-gradient(168deg,#e7d4ad,#dcc89d 55%,#cab689);
+  --hx-card-border:#9c8456;
+  --hx-chrome:#b49c73; --hx-title:#e9d8b4; --hx-title-glow:0 0 22px rgba(244,200,118,.35),0 2px 2px rgba(0,0,0,.6);
+}
+
+/* ---- page shell ---- */
+body{
+  font-family:'EB Garamond',Georgia,serif !important;
+  background:var(--hx-bg-grad) !important; background-color:var(--hx-bg) !important;
+  background-attachment:fixed !important; color:var(--hx-text) !important;
+}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,transparent 0 42px,var(--hx-grid) 42px 43px),repeating-linear-gradient(90deg,transparent 0 42px,var(--hx-grid) 42px 43px);}
+/* NOTE: do NOT put position/z-index on .container or main — it creates a
+   stacking context that traps Bootstrap's modal below its own backdrop. */
+h1,h2,h3,h4,.navbar-brand{font-family:'Cinzel',serif !important}
+
+/* ---- navbar ---- */
+.navbar.bg-dark{background:transparent !important;border-bottom:1px solid var(--hx-card-border);
+  backdrop-filter:blur(2px);}
+.navbar .navbar-brand{color:var(--hx-title) !important;letter-spacing:.06em;text-shadow:var(--hx-title-glow)}
+.navbar .nav-link{color:var(--hx-chrome) !important;font-family:'Cinzel',serif;font-size:13px;letter-spacing:.04em}
+.navbar .nav-link:hover{color:var(--hx-gold-bright) !important}
+
+/* ---- jumbotron / page header ---- */
+.jumbotron{background:transparent !important;text-align:center;padding-top:2.2rem}
+.jumbotron h1{color:var(--hx-title) !important;text-shadow:var(--hx-title-glow);font-size:clamp(28px,5vw,46px)}
+.category-header h3{color:var(--hx-title) !important;letter-spacing:.14em;text-transform:uppercase;font-size:15px;
+  border-bottom:1px dashed var(--hx-card-border);padding-bottom:.4rem}
+
+/* ---- challenge cards ---- */
+.challenge-button.btn.btn-dark{
+  background:var(--hx-card) !important;border:1px solid var(--hx-card-border) !important;color:var(--hx-ink) !important;
+  border-radius:10px !important;box-shadow:0 2px 0 rgba(120,95,55,.25),inset 0 0 40px rgba(205,184,134,.25);
+  min-height:118px;transition:transform .15s ease,box-shadow .2s ease;overflow:hidden;position:relative}
+.challenge-button.btn.btn-dark:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(90,60,30,.3),inset 0 0 40px rgba(216,166,62,.2)}
+.challenge-button .challenge-inner p{font-family:'Cinzel',serif;font-weight:700;font-size:15px;color:var(--hx-ink);margin-bottom:.3rem}
+.challenge-button .challenge-inner span{color:var(--hx-wax);font-style:italic}
+.challenge-button.btn.btn-dark.challenge-solved{border-color:var(--hx-gold-bright) !important;
+  background:linear-gradient(168deg,#f0dba6,#e4cb8c 60%,#d3b877) !important;
+  box-shadow:0 12px 30px rgba(0,0,0,.2),0 0 30px rgba(236,199,102,.35),inset 0 0 50px rgba(244,200,118,.4) !important}
+.challenge-button.challenge-solved::after{content:"✦ sealed";position:absolute;top:8px;right:10px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.14em;color:#7a5a16}
+
+/* ---- rich story cards: the engine appends a .hxc overlay and sets [data-hx];
+   CTFd's bare inner (name + points) is hidden, the parchment card from the
+   mockup takes its place (kicker · character · blurb · state · flagphrase). ---- */
+.challenge-button.btn.btn-dark[data-hx]{min-height:190px;text-align:left !important;align-items:stretch !important;padding:0 !important;white-space:normal}
+.challenge-button[data-hx] > .challenge-inner{display:none !important}
+.challenge-button[data-hx].challenge-solved::after{content:none !important}
+.hxc{display:flex;flex-direction:column;gap:7px;width:100%;height:100%;padding:18px 16px 15px;text-align:left;white-space:normal}
+.hxc-sigil{position:absolute;right:8px;bottom:6px;width:70px;height:70px;opacity:.12;color:var(--hx-ink);pointer-events:none}
+.hxc-sigil svg{width:70px;height:70px;fill:currentColor;display:block}
+.hxc-kick{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.22em;color:var(--hx-ink-faint)}
+.hxc-name{font-family:'Cinzel',serif;font-weight:700;font-size:16px;line-height:1.16;color:var(--hx-ink)}
+.hxc-ghost{font-style:italic;font-size:13.5px;color:var(--hx-ink-soft)}
+.hxc-blurb{font-size:13px;line-height:1.46;color:var(--hx-ink-soft)}
+.hxc-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+.hxc-tag{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:rgba(124,43,34,.12);color:var(--hx-wax);border:1px solid rgba(124,43,34,.4);white-space:nowrap}
+.hxc-phrase{font-style:italic;font-size:12px;color:#6a4e14}
+.hxc.done .hxc-name{color:#6a4e14}
+.hxc.done .hxc-tag{background:rgba(181,137,47,.18);color:#6a4e14;border-color:var(--hx-gold)}
+
+/* ---- locked ("sealed") stages — replaces CTFd's bare "???" cards ---- */
+.challenge-button.btn.btn-dark[data-hx-state="locked"]{filter:saturate(.7) brightness(.98);cursor:default}
+.challenge-button.btn.btn-dark[data-hx-state="locked"]:hover{transform:none !important;box-shadow:0 2px 0 rgba(120,95,55,.2),inset 0 0 40px rgba(205,184,134,.16) !important}
+.hxc.locked .hxc-kick,.hxc.locked .hxc-ghost{color:var(--hx-ink-faint)}
+.hxc.locked .hxc-blurb{opacity:.7}
+.hxc-sealed{color:var(--hx-ink-faint) !important;letter-spacing:.12em}
+.hxc-seal{position:absolute;right:11px;top:11px;width:44px;height:44px;z-index:2;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.45))}
+.hxc-seal-svg{width:44px;height:44px;display:block;border-radius:50%;object-fit:cover}
+.hxc-tag.locked{background:rgba(70,55,35,.12);color:var(--hx-ink-faint);border-color:rgba(70,55,35,.3)}
+
+/* ---- themed hint dialog (replaces CTFd's native confirm()/alert() so hint
+   unlocking works in embedded browsers and matches the parchment look) ---- */
+.hx-dlg-veil{position:fixed;inset:0;z-index:21000;display:flex;align-items:center;justify-content:center;padding:20px;
+  background:radial-gradient(70% 70% at 50% 40%,rgba(20,12,6,.72),rgba(8,5,3,.9))}
+.hx-dlg{max-width:440px;width:100%;border-radius:12px;padding:24px 24px 20px;
+  background:var(--hx-card);border:1px solid var(--hx-card-border);color:var(--hx-ink);
+  box-shadow:0 28px 70px rgba(0,0,0,.6),inset 0 0 60px rgba(205,184,134,.3)}
+.hx-dlg-t{font-family:'Cinzel',serif;font-size:16px;letter-spacing:.04em;color:var(--hx-ink);margin-bottom:8px}
+.hx-dlg-b{font-size:15px;line-height:1.55;color:var(--hx-ink-soft);white-space:pre-wrap;word-break:break-word}
+.hx-dlg-a{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.hx-dlg .hx-btn{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:9px 16px;border-radius:8px;border:1px solid var(--hx-ink-faint);background:transparent;color:var(--hx-ink);cursor:pointer}
+.hx-dlg .hx-btn.p{background:linear-gradient(var(--hx-wax),var(--hx-wax-dark));border-color:var(--hx-wax-dark);color:#f3e2d8}
+.hx-dlg .hx-btn:hover{filter:brightness(1.07)}
+
+/* ---- finale capstone quiz (rendered inside the story veil #hx-scene) ---- */
+#hx-quiz{margin:8px 0 2px}
+#hx-scene .hx-q{margin:0 0 15px;padding-bottom:14px;border-bottom:1px solid rgba(156,132,86,.28)}
+#hx-scene .hx-q:last-child{border-bottom:none}
+#hx-scene .hx-q-t{font-family:'Cinzel',serif;font-size:14px;color:var(--hx-ink);margin-bottom:9px;line-height:1.4}
+#hx-scene .hx-q-in{width:100%;padding:10px 12px;border:1px solid var(--hx-card-border);border-radius:8px;background:rgba(255,250,235,.55);color:var(--hx-ink);font-family:'EB Garamond',serif;font-size:16px}
+#hx-scene .hx-q-in:focus{outline:none;border-color:var(--hx-wax);box-shadow:0 0 0 3px rgba(124,43,34,.15)}
+#hx-scene .hx-q-opt{display:flex;align-items:flex-start;gap:9px;padding:8px 11px;margin:5px 0;border:1px solid var(--hx-card-border);border-radius:8px;cursor:pointer;font-size:15px;color:var(--hx-ink);background:rgba(255,250,235,.3)}
+#hx-scene .hx-q-opt:hover{border-color:var(--hx-wax)}
+#hx-scene .hx-q-opt input{margin-top:3px;accent-color:var(--hx-wax)}
+#hx-scene .hx-ord-seq{min-height:34px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px;border:1px dashed var(--hx-card-border);border-radius:8px;margin-bottom:8px}
+#hx-scene .hx-ord-empty{font-style:italic;color:var(--hx-ink-faint);font-size:13px}
+#hx-scene .hx-ord-chip{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.04em;background:linear-gradient(rgba(181,137,47,.22),rgba(181,137,47,.12));border:1px solid var(--hx-gold);color:#6a4e14;padding:4px 9px;border-radius:999px}
+#hx-scene .hx-ord-pool{display:flex;flex-wrap:wrap;gap:7px}
+#hx-scene .hx-ord-item{font-family:'EB Garamond',serif;font-size:14px;padding:7px 12px;border:1px solid var(--hx-card-border);border-radius:8px;background:rgba(255,250,235,.4);color:var(--hx-ink);cursor:pointer}
+#hx-scene .hx-ord-item:hover:not(:disabled){border-color:var(--hx-wax)}
+#hx-scene .hx-ord-item:disabled,#hx-scene .hx-ord-item.used{opacity:.35;cursor:default;text-decoration:line-through}
+#hx-scene .hx-ord-reset{margin-top:8px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:none;border:none;color:var(--hx-ink-soft);cursor:pointer}
+#hx-scene .hx-quiz-err{color:var(--hx-wax);font-size:14px;text-align:center;min-height:18px;margin-top:4px}
+
+/* ---- read-timer: 10s countdown ring on the primary story button ---- */
+#hx-scene .hx-btn.p.counting{opacity:.55;cursor:not-allowed;pointer-events:none}
+#hx-scene .hx-ring{display:inline-block;width:17px;height:17px;vertical-align:-3px;margin-right:8px}
+#hx-scene .hx-ring svg{width:17px;height:17px;transform:rotate(-90deg);display:block}
+#hx-scene .hx-ring .bg{fill:none;stroke:rgba(243,226,216,.3);stroke-width:2.4}
+#hx-scene .hx-ring .fg{fill:none;stroke:#f3e2d8;stroke-width:2.4;stroke-linecap:round;stroke-dasharray:50.27;stroke-dashoffset:50.27;animation:hxcount var(--hx-read,10s) linear forwards}
+@keyframes hxcount{to{stroke-dashoffset:0}}
+
+/* ---- modal (challenge window + our interstitials share the parchment look) ---- */
+.modal-content{background:var(--hx-card) !important;border:1px solid var(--hx-card-border) !important;color:var(--hx-ink) !important;border-radius:12px}
+.modal-content .modal-header{border-bottom-color:var(--hx-card-border)}
+.modal-content .challenge-name,.modal-content h1,.modal-content h2,.modal-content h3{color:var(--hx-ink) !important;font-family:'Cinzel',serif}
+
+/* ---- buttons / inputs ---- */
+.btn-primary{background:linear-gradient(var(--hx-wax),var(--hx-wax-dark)) !important;border-color:var(--hx-wax-dark) !important;color:#f3e2d8 !important}
+.btn-outline-secondary,.btn-secondary{border-color:var(--hx-ink-faint) !important;color:var(--hx-ink) !important}
+.form-control,.form-select{background:rgba(255,250,235,.5) !important;border-color:var(--hx-card-border) !important;color:var(--hx-ink) !important}
+
+/* ---- tables / scoreboard ---- */
+.table{color:var(--hx-ink) !important}
+.table thead th{font-family:'Cinzel',serif;color:var(--hx-chrome) !important;border-bottom-color:var(--hx-card-border) !important}
+
+/* =======================================================================
+   Story layer: progress strip + Patronus sigils + cinematic interstitials
+   ======================================================================= */
+#hx-strip{max-width:880px;margin:10px auto 6px;position:relative;padding:0 10px}
+#hx-strip .hx-line{position:absolute;top:24px;left:28px;right:28px;border-top:2px dashed var(--hx-card-border);z-index:0}
+#hx-strip .hx-nodes{display:flex;justify-content:space-between;position:relative;z-index:1}
+#hx-strip .hx-node{display:flex;flex-direction:column;align-items:center;gap:4px}
+#hx-strip .hx-ic{height:48px;display:grid;place-items:center}
+#hx-strip .hx-dot{width:18px;height:18px;border-radius:50%;background:var(--hx-bg);border:2px solid var(--hx-ink-faint)}
+#hx-strip .hx-node.cur .hx-dot{border-color:var(--hx-ember);box-shadow:0 0 0 5px rgba(194,102,58,.2)}
+#hx-strip .hx-lab{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--hx-chrome)}
+#hx-strip .hx-sig{width:42px;height:42px;display:block;fill:currentColor}
+#hx-strip .hx-pat{color:var(--hx-patronus);filter:drop-shadow(0 0 8px var(--hx-patronus-glow));animation:hxfloat 4.2s ease-in-out infinite}
+@keyframes hxfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+#hx-strip .hx-title{text-align:center;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;color:var(--hx-chrome);text-transform:uppercase;margin-bottom:6px}
+/* case-file masthead (mirrors the preview's header.case) */
+#hx-strip .hx-mast{text-align:center;padding:20px 10px 4px}
+#hx-strip .hx-kick{font-family:'Cinzel',serif;letter-spacing:.42em;font-size:11px;color:var(--hx-chrome);text-transform:uppercase;margin-bottom:10px}
+#hx-strip .hx-h1{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(26px,5vw,44px);line-height:1.05;margin:0;color:var(--hx-title);text-shadow:var(--hx-title-glow)}
+#hx-strip .hx-sub{font-style:italic;color:var(--hx-chrome);margin-top:8px;font-size:clamp(14px,2.4vw,17px)}
+#hx-strip .hx-meta{font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:.2em;color:var(--hx-chrome);text-transform:uppercase;margin:12px 0 10px}
+#hx-strip .hx-rail{position:relative;margin-top:6px}
+/* soundtrack control: ♪ toggle + volume slider (present when audio.enabled=true) */
+#hx-audio{position:fixed;right:14px;bottom:14px;z-index:30000;display:flex;align-items:center;gap:9px;
+  padding:6px 12px;border-radius:999px;border:1px solid var(--hx-card-border);background:var(--hx-card);opacity:.82;transition:opacity .15s ease}
+#hx-audio:hover{opacity:1}
+#hx-mute{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.12em;border:none;background:none;color:var(--hx-ink);cursor:pointer;padding:0;white-space:nowrap}
+#hx-mute:hover{color:var(--hx-gold)}
+#hx-audio input[type=range]{-webkit-appearance:none;appearance:none;width:72px;height:3px;border-radius:3px;
+  background:var(--hx-card-border);outline:none;cursor:pointer}
+#hx-audio input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:12px;height:12px;border-radius:50%;background:var(--hx-gold);border:none;cursor:pointer}
+#hx-audio input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--hx-gold);border:none;cursor:pointer}
+#hx-strip #hx-replay{cursor:pointer;color:var(--hx-gold-bright)}
+#hx-strip #hx-replay:hover{text-decoration:underline}
+
+#hx-veil{position:fixed;inset:0;z-index:20000;display:none;align-items:center;justify-content:center;padding:20px;
+  background:radial-gradient(70% 70% at 50% 40%,rgba(20,12,6,.78),rgba(8,5,3,.94))}
+#hx-veil.open{display:flex}
+#hx-scene{max-width:620px;width:100%;max-height:88vh;overflow:auto;border-radius:12px;padding:32px 32px 24px;position:relative;
+  background:var(--hx-card);border:1px solid var(--hx-card-border);color:var(--hx-ink);
+  box-shadow:0 30px 80px rgba(0,0,0,.65),inset 0 0 70px rgba(205,184,134,.3)}
+#hx-scene .hx-beat{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--hx-wax);margin-bottom:6px}
+#hx-scene h2{font-family:'Cinzel',serif;font-size:22px;margin:0 0 4px;color:var(--hx-ink)}
+#hx-scene .hx-who{font-style:italic;color:var(--hx-ink-soft);margin-bottom:14px}
+#hx-scene p{font-size:16px;line-height:1.62;color:var(--hx-ink);margin:0 0 13px}
+#hx-scene p em{color:var(--hx-ink-soft)}
+#hx-scene .hx-flag{font-family:'Cinzel',serif;letter-spacing:.1em;color:#7a5a16;text-align:center;margin:13px 0;padding:9px;border-top:1px solid rgba(181,137,47,.45);border-bottom:1px solid rgba(181,137,47,.45)}
+#hx-scene .hx-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+#hx-scene .hx-btn{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:9px 16px;border-radius:8px;border:1px solid var(--hx-ink-faint);background:transparent;color:var(--hx-ink);cursor:pointer}
+#hx-scene .hx-btn.p{background:linear-gradient(var(--hx-wax),var(--hx-wax-dark));border-color:var(--hx-wax-dark);color:#f3e2d8}
+#hx-scene .hx-x{position:absolute;right:14px;top:9px;border:none;background:none;font-size:21px;color:var(--hx-ink-soft);cursor:pointer;font-family:'Cinzel',serif}
+#hx-replay{cursor:pointer;color:var(--hx-gold-bright);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em}

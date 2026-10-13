@@ -5,19 +5,19 @@ Clone it, run one command, and play through a narrated hacking investigation in
 your browser. All data is synthetic — run it on a local/isolated machine, not the
 public internet.
 
+PS: The Contributions are not displayed correctly,to view live click contributors.
 ---
 
 ## The story
 
-Years after the war, you are **George Weasley** — now an Unspeakable in the
+Years after the war, you are **George Weasley** : now an Unspeakable in the
 Department of Mysteries. Something the dark lord left behind never trusted death
 to keep him, and it is beginning to wake. Armed with a device that can pull a
 soul back out of time, you must recover **six lost fragments** before the threat
 breaks loose.
 
-Each fragment is guarded by the memory of someone who fell — Lupin, Pettigrew,
-Snape, Dumbledore, Sirius, Bellatrix. To reach each one you have to **break a
-real security challenge**. Solve it, lay the ghost to rest, and the next door
+Each fragment is guarded by the memory of someone who fell. To reach each one you have to **break a
+real security challenge**. Solve it, lay the past to rest, and the next door
 opens. Along the way the ghosts tempt you with a bargain of your own... and the
 finale asks whether you can bring the whole case home.
 

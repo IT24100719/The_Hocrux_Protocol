@@ -13,6 +13,13 @@
   function onChalPage(){ return /\/challenges\/?$/.test(location.pathname); }
   function paras(a){ return (a||[]).map(function(p){ return '<p>'+p+'</p>'; }).join(''); }
 
+  /* "seen once" flags are namespaced per CTFd account, so every NEW account
+     starts fresh and gets the prologue + each challenge's arrival scene — even
+     on a browser where a previous account already watched them. */
+  function uid(){ try { return (window.CTFd && CTFd.user && CTFd.user.id) || (window.init && window.init.userId) || 'anon'; } catch(e){ return 'anon'; } }
+  function seenGet(base){ try { return localStorage.getItem(base+'-'+uid()) === '1'; } catch(e){ return false; } }
+  function seenSet(base){ try { localStorage.setItem(base+'-'+uid(), '1'); } catch(e){} }
+
   function ensureVeil(){
     if (el('hx-veil')) return;
     var v = document.createElement('div'); v.id = 'hx-veil';
@@ -66,7 +73,7 @@
     openVeil();
   }
   function introStep(d){ introIdx += d; showIntro(); }
-  function introDone(){ try { localStorage.setItem('hx-intro-seen','1'); } catch(e){} closeVeil(); }
+  function introDone(){ seenSet('hx-intro-seen'); closeVeil(); }
 
   /* stage solve */
   function openSolve(code){
@@ -98,10 +105,10 @@
      the first time a player opens an unlocked challenge. First-open-only,
      remembered per code; closing the veil reveals CTFd's real challenge modal
      underneath. Replay any time with HX.openUnlock('HX-0N'). */
-  function unlockSeen(code){ try { return localStorage.getItem('hx-unlock-'+code) === '1'; } catch(e){ return false; } }
+  function unlockSeen(code){ return seenGet('hx-unlock-'+code); }
   function openUnlock(code){
     var st = SC.stages[code]; if (!st || !st.unlock) return; var u = st.unlock;
-    try { localStorage.setItem('hx-unlock-'+code,'1'); } catch(e){}
+    seenSet('hx-unlock-'+code);
     el('hx-scene').innerHTML =
       '<button class="hx-x" onclick="HX.close()">×</button>' +
       (u.beat ? '<div class="hx-beat">'+u.beat+'</div>' : '') +
@@ -259,6 +266,7 @@
   function sigSVG(code){ return SIG[code] || ''; }
   function buildStrip(list){
     var cur = -1; for (var i=0;i<list.length;i++){ if (!list[i].solved){ cur = i; break; } }
+    var allSolved = list.length > 0 && list.every(function(it){ return it.solved; });
     var nodes = '';
     list.forEach(function(it, i){
       var icon = it.solved
@@ -271,7 +279,8 @@
         '<h1 class="hx-h1">The Horcrux Protocol</h1>' +
         '<div class="hx-sub">Shadows Over Hogwarts — six fragments to carry home</div>' +
         '<div class="hx-meta">Investigator: G. Weasley, Unspeakable &nbsp;•&nbsp; Status: Open ' +
-        '&nbsp;·&nbsp; <span id="hx-replay" onclick="HX.openIntro()">↻ replay intro</span></div>' +
+        '&nbsp;·&nbsp; <span id="hx-replay" onclick="HX.openIntro()">↻ replay intro</span>' +
+        (allSolved ? '&nbsp;·&nbsp; <span id="hx-replay-finale" onclick="HX.fin(\'enter\')">↻ replay finale</span>' : '') + '</div>' +
       '</div>' +
       '<div class="hx-rail"><div class="hx-line"></div><div class="hx-nodes">'+nodes+'</div></div>';
     var strip = el('hx-strip');
@@ -503,7 +512,7 @@
         clearInterval(iv); refreshStrip(); watchBoard(); audioInit(); watchOpen();
         var ht = 0, hiv = setInterval(function(){ if (installHintHooks() || ++ht > 80) clearInterval(hiv); }, 150);
         setInterval(function(){ if (document.visibilityState === 'visible') refreshStrip(); }, 2500);
-        try { if (!localStorage.getItem('hx-intro-seen')) setTimeout(openIntro, 600); } catch(e){}
+        if (!seenGet('hx-intro-seen')) setTimeout(openIntro, 600);
       }
     }, 150);
   }

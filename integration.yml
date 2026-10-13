@@ -2,7 +2,12 @@
 # THE HORCRUX PROTOCOL - INTEGRATION CONTRACT (single source of truth)
 # Every generator and challenge reads its values from here.
 # Change a value here, regenerate, re-solve end to end. Never edit in two places.
-# This file is PRIVATE. It is .gitignored. Do not commit to any public repo.
+#
+# NOTE: this file SHIPS with the repo so a fresh clone is self-contained and
+# runnable out of the box — which means the six flags below are visible to
+# anyone who can see the repo. That is fine for self-hosted / solo play. If you
+# run this as a real competition, keep the repo PRIVATE (or rotate the flags
+# here and regenerate) so players can't read the answers.
 # =====================================================================
 
 flag_regex: '^HORCRUX\{[A-Za-z0-9_\-]{4,64}\}$'

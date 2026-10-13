@@ -6,6 +6,26 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
+# First run on a fresh clone has no .env (it's gitignored). Create one from the
+# template with freshly generated secrets so the stack is self-contained — no
+# manual editing required. Delete .env to regenerate.
+if [ ! -f .env ]; then
+  echo "[start] no .env found — generating one from .env.example with fresh secrets"
+  cp .env.example .env
+  # `tr | head -c` makes head close the pipe early, so tr dies with SIGPIPE
+  # (141); the trailing `|| true` keeps that from aborting under pipefail. The
+  # hex chars are already captured before tr is signalled.
+  gen(){ LC_ALL=C tr -dc 'a-f0-9' </dev/urandom 2>/dev/null | head -c "$1" || true; }
+  DBP="$(gen 32)"; SK="$(gen 48)"; ADMINPW="$(gen 18)"
+  sed -i.bak \
+    -e "s/^DB_PASSWORD=.*/DB_PASSWORD=${DBP}/" \
+    -e "s/^CTFD_SECRET_KEY=.*/CTFD_SECRET_KEY=${SK}/" \
+    -e "s/^CTFD_ADMIN_PASSWORD=.*/CTFD_ADMIN_PASSWORD=${ADMINPW}/" .env
+  rm -f .env.bak
+  echo "[start] admin account -> user: admin  password: ${ADMINPW}"
+  echo "[start] (saved in .env — keep it; it is gitignored and not shared)"
+fi
+
 LAB_IP="$(sed -n 's/^LAB_IP=//p' .env 2>/dev/null | tr -d '\r' | head -1)"
 [ -n "${LAB_IP:-}" ] || LAB_IP=127.0.0.1
 URL="http://${LAB_IP}:8000/"

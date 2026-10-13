@@ -1,63 +1,163 @@
 # The Horcrux Protocol: Shadows Over Hogwarts
 
-Six-stage CTF Play Box for an isolated lab. All data synthetic; never expose to the internet.
+A six-stage, story-driven Capture-the-Flag (CTF) that runs entirely in Docker.
+Clone it, run one command, and play through a narrated hacking investigation in
+your browser. All data is synthetic — run it on a local/isolated machine, not the
+public internet.
 
-## Build
-    cp .env.example .env            # set LAB_IP, DB_PASSWORD, CTFD_SECRET_KEY, CTFD_ADMIN_*
-    # ensure integration.yml is present (gitignored — copy it if you cloned)
-    ./start.sh                      # bring up + auto-provision + open the CTF in a browser
-    # Windows (no Git Bash):  powershell -ExecutionPolicy Bypass -File start.ps1
-    # or plain, no browser:   docker compose up -d --build   (then docker compose logs -f seeder)
+---
 
-The browser opens on a dark **provisioning loading screen** and auto-advances to
-the CTF the moment the seeder finishes (first run ~1-2 min).
+## The story
 
-The one-shot `seeder` container generates the artefacts and seeds CTFd
-(challenges, flags, attachments, prereqs, 18 hints, theme, pages, test user) — no
-host-side Python needed. HX-06 runs as a container (SSH on :2222); for a real lab
-network at 10.10.20.60 use the VM instead: `(cd challenges/hx06-vault && vagrant up)`.
-Host-driven alternative: `./build-all.sh && docker compose up -d --build && python tools/seed_ctfd.py --test-user`.
+Years after the war, you are **George Weasley** — now an Unspeakable in the
+Department of Mysteries. Something the dark lord left behind never trusted death
+to keep him, and it is beginning to wake. Armed with a device that can pull a
+soul back out of time, you must recover **six lost fragments** before the threat
+breaks loose.
 
-Participants reach CTFd at http://$LAB_IP:8000/ ; HX-02 at /chamber ;
-HX-06 via `ssh vault@$LAB_IP -p 2222` (password recovered in HX-05).
-Admin after seeding = `CTFD_ADMIN_NAME` / `CTFD_ADMIN_PASSWORD` from `.env`.
+Each fragment is guarded by the memory of someone who fell — Lupin, Pettigrew,
+Snape, Dumbledore, Sirius, Bellatrix. To reach each one you have to **break a
+real security challenge**. Solve it, lay the ghost to rest, and the next door
+opens. Along the way the ghosts tempt you with a bargain of your own... and the
+finale asks whether you can bring the whole case home.
 
-`tools/seed_ctfd.py` makes the whole CTF reproducible: it runs the setup wizard
-on a fresh DB, then (re)creates the 6 challenges, their flags/attachments, the
-unlock-in-order prerequisite chain, the 18 chained hints, and the parchment theme
-+ story layer. It is idempotent — re-run it any time. See `runbooks/reset.md` for
-the full reset/rebuild procedure (incl. `docker compose down -v`).
+The narrative plays out as cinematic interludes inside the CTF platform: a
+prologue, an "arrival" and a "sealing" scene for every stage, a midpoint
+temptation, and a capstone finale quiz — so it reads like a story, not just a
+scoreboard.
 
-## Secrets & release boundary
-Infrastructure secrets (DB password, CTFd `SECRET_KEY`, admin password, API
-tokens) live only in `.env` / `integration.yml` / `answer-key/`, all gitignored.
-The six CTF **flags** are content and appear in design files (story, HX-06
-provisioning, the stego clue), so **this repo is PRIVATE** — do not publish it
-without scrubbing. Before a release:
+## What the CTF covers
 
-    gitleaks detect --config .gitleaks.toml --redact -v   # once git-initialised
-    ./build-all.sh && (for s in challenges/*/dist/SHA256SUMS challenges/*/dist/*.sha256; \
-        do (cd "$(dirname "$s")" && sha256sum -c "$(basename "$s")"); done)
-    tools/release_manifest.sh > RELEASE_MANIFEST.txt       # versions, image IDs, hashes
+Six stages, each a different discipline. They **unlock in order** (you must solve
+one to reveal the next), ramping from beginner to intermediate:
 
-Only the proxy (`:8000`) and the HX-06 vault (`:2222`) publish ports, both bound
-to `$LAB_IP` — never `0.0.0.0`.
+| # | Stage | Category | Skill you practice |
+|---|-------|----------|--------------------|
+| HX-01 | The Marauder's Map | **Steganography** | Finding data hidden inside an image |
+| HX-02 | The Chamber of Secrets | **Web exploitation** | Bypassing a weak authentication flow |
+| HX-03 | The Runes of Hogwarts | **Cryptography** | Breaking a classical cipher with a recovered key |
+| HX-04 | The Restricted Section | **Forensics** | Correlating logs and reading leftover metadata |
+| HX-05 | The Floo Network | **Network analysis** | Isolating a suspicious stream in a packet capture |
+| HX-06 | The Gringotts Vault | **Linux privilege escalation** | SSH enumeration and a bounded misconfiguration |
 
-## Layout
-    start.sh / start.ps1   one-command launch: up + provision + open browser
-    integration.yml        single source of truth (private)
-    docker-compose.yml      platform stack
-    proxy/                  nginx routing (/chamber -> HX-02, / -> CTFd)
-    challenges/hx0*/        per-stage generators + dist/ artefacts
-    answer-key/             solutions (private)
-    runbooks/reset.md       recovery / full rebuild
-    runbooks/deploy.md      deploy on another computer (incl. migrating player data)
-    ctfd-config/            challenges.yml + hints.yml (declarative CTF definition)
-    tools/seed_ctfd.py      idempotent seeder (challenges, hints, prereqs, theme)
-    tools/backup.sh         snapshot player progress (db + uploads); restore.sh to roll back
-    tools/release_manifest.sh  versions + image IDs + artefact hashes (run at release)
-    .gitleaks.toml          secret-scan config (flags allowlisted; infra secrets caught)
-    tools/hint_report.py    grading report: hints used per player
-    tools/finale_report.py  grading report: capstone-quiz score per player (hidden from players)
-    ctfd/plugins/           horcrux_starting_points (welcome points) + horcrux_finale (quiz scoring)
-    ctfd-theme/horcrux-inject/  parchment theme + story layer + hint-dialog fix
+All flags follow the format `HORCRUX{...}`. Hints are available on each stage for
+a small point penalty.
+
+---
+
+## Prerequisites
+
+Before you start, make sure you have:
+
+1. **Docker** — installed **and running**. This is the only hard requirement; the
+   whole CTF runs in containers.
+   - **Windows / macOS:** [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+     (on Windows, keep the WSL 2 backend). **Launch Docker Desktop and wait until
+     it says "Engine running" before continuing.**
+   - **Linux:** `curl -fsSL https://get.docker.com | sh`, then
+     `sudo usermod -aG docker "$USER"` and log out/in so you can run Docker
+     without `sudo`.
+2. **Git** — to clone the repo.
+   - **Windows:** [Git for Windows](https://git-scm.com/download/win) (also gives
+     you **Git Bash**, handy for running `start.sh`).
+3. **Resources & ports:** ~4 GB free disk and ~2 GB RAM for the containers, and
+   the host ports **8000** (web) and **2222** (SSH) free.
+
+**Confirm Docker is actually running** before going further:
+
+```bash
+docker run --rm hello-world
+```
+
+If that prints a "Hello from Docker!" message, you're ready. If it errors with
+something like *"cannot connect to the Docker daemon"*, Docker isn't running —
+start Docker Desktop (or the Docker service) and try again.
+
+---
+
+## Step-by-step: clone and run
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/IT24100719/The_Hocrux_Protocol.git
+```
+```bash
+cd The_Hocrux_Protocol
+```
+
+### 2. (Optional) configure — the launcher does this for you
+
+On first run, `start.sh` / `start.ps1` automatically create a `.env` file from
+`.env.example` with freshly generated secrets, and print the admin password.
+**You don't need to edit anything to play on a single machine.**
+
+Edit `.env` only if you want to customize:
+- `LAB_IP` — `127.0.0.1` for a single machine (default), or the host's LAN IP to
+  let other machines on your lab network reach it.
+- `CTFD_ADMIN_NAME` / `CTFD_ADMIN_EMAIL` / `CTFD_ADMIN_PASSWORD` — the admin
+  account (the password is auto-generated; set your own here if you prefer).
+
+To regenerate everything, delete `.env` and launch again.
+
+### 3. Launch
+
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy Bypass -File start.ps1
+```
+
+**Linux / macOS / Git Bash:**
+```bash
+./start.sh
+```
+
+**Headless / no auto-open browser (any OS):**
+```bash
+docker compose up -d --build
+```
+
+The first run **builds the images and provisions the CTF (~1–2 minutes)**. Your
+browser opens on a loading screen and **auto-advances to the CTF** once
+provisioning finishes. Watch progress any time with:
+
+```bash
+docker compose logs -f seeder
+```
+
+### 4. Open and play
+
+Replace `LAB_IP` with your value (default `127.0.0.1`):
+
+| What | Where |
+|------|-------|
+| CTFd (main site) | `http://LAB_IP:8000/` |
+| HX-02 web stage | `http://LAB_IP:8000/chamber` |
+| HX-06 vault (SSH) | `ssh vault@LAB_IP -p 2222` |
+
+- **Players:** click **Register** on the site and create your own account, then
+  start at HX-01. Each solve unlocks the next stage.
+- **Admin:** log in with the `CTFD_ADMIN_*` values from your `.env` (the launcher
+  printed the generated admin password on first run).
+
+---
+
+## Stop / reset
+
+```bash
+docker compose down        # stop everything, keep all data (accounts, progress)
+```
+```bash
+docker compose down -v     # stop and wipe the database for a totally fresh start
+```
+
+To start again later, just run the launcher (or `docker compose up -d`) again.
+
+---
+
+> **Windows line-endings note:** the repo ships a `.gitattributes` that keeps the
+> `.sh` scripts as **LF**, so they work inside the Linux containers. If you ever
+> hit a `bad interpreter` error after editing a script, normalize it with:
+> ```bash
+> sed -i 's/\r$//' start.sh build-all.sh tools/*.sh challenges/hx06-vault/*.sh tools/seeder/entrypoint.sh
+> ```

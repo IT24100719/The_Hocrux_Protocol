@@ -1,2 +1,24 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Normalize line endings so scripts that run INSIDE the Linux containers
+# (seeder/vault entrypoints, start.sh, build-all.sh) are never broken by CRLF
+# when the repo is cloned on Windows. Repo + checkout stay LF everywhere...
+* text=auto eol=lf
+
+# ...except the Windows-only PowerShell launcher.
+*.ps1 text eol=crlf
+
+# Binary assets — git must never line-ending-mangle these.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.gif   binary
+*.ico   binary
+*.mp3   binary
+*.wav   binary
+*.pcap  binary
+*.zip   binary
+*.tgz   binary
+*.tar.gz binary
+*.ova   binary
+*.woff  binary
+*.woff2 binary

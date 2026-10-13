@@ -123,9 +123,11 @@ services:
 networks:
   internal:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/24
+    # Subnet is auto-assigned by Docker so a fresh clone never hits a
+    # "pool overlaps with other one" error. start.sh / start.ps1 prefer
+    # 172.20.0.0/24 when it is free (via docker-compose.pin.yml); otherwise
+    # Docker picks any free range. Running `docker compose up` directly also
+    # just auto-assigns.
   vault:
     driver: bridge                # dedicated net: isolated from CTFd/db, SSH publishable
     # Outbound internet from the vault box is dropped INSIDE the container (see

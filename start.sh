@@ -31,7 +31,16 @@ LAB_IP="$(sed -n 's/^LAB_IP=//p' .env 2>/dev/null | tr -d '\r' | head -1)"
 URL="http://${LAB_IP}:8000/"
 
 echo "[start] bringing the stack up (first run builds + provisions — ~1-2 min)..."
-docker compose up -d --build
+# Prefer the project's subnet (172.20.0.0/24) when it is free; if another Docker
+# network already uses it, fall back to Docker's auto-assignment so the stack
+# still comes up instead of failing with "pool overlaps".
+PIN_ARGS="-f docker-compose.yml -f docker-compose.pin.yml"
+NETS="$(docker network ls -q 2>/dev/null)"
+if [ -n "$NETS" ] && docker network inspect $NETS 2>/dev/null | grep -q "172.20.0.0/24"; then
+  echo "[start] 172.20.0.0/24 is already in use — letting Docker auto-assign a subnet"
+  PIN_ARGS=""
+fi
+docker compose $PIN_ARGS up -d --build
 
 echo "[start] opening ${URL}"
 if command -v xdg-open >/dev/null 2>&1;   then xdg-open "$URL" >/dev/null 2>&1 &

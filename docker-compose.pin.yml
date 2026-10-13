@@ -1,0 +1,12 @@
+# Optional overlay: pin the internal network to the project's preferred subnet.
+#
+# start.sh / start.ps1 add this file ONLY when 172.20.0.0/24 is free on the host,
+# so the stack lands on a predictable range when possible but still comes up on a
+# machine where that subnet is already taken (then the base file's auto-assignment
+# is used instead). Use it manually with:
+#   docker compose -f docker-compose.yml -f docker-compose.pin.yml up -d --build
+networks:
+  internal:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
